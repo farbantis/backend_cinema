@@ -21,6 +21,10 @@ class CinemaUser(AbstractUser):
         return self.email
 
 
+class CinemaAdmin(CinemaUser):
+    """an admin who managers general information"""
+
+
 # add - likes, comment, profile (collect data about user ? cookies?)
 class Cinemagoer(CinemaUser):
     class CinemagoerStatusLimits:
@@ -49,7 +53,6 @@ class Cinemagoer(CinemaUser):
     date_of_birth = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=15, choices=CinemagoerGender.choices, default=CinemagoerGender.NO_DATA)
     status = models.CharField(max_length=15, choices=CinemagoerStatus.choices, default=CinemagoerStatus.BRONZE)
-    is_active_cinema_goer = models.BooleanField(default=True)
     bonus = models.IntegerField(default=0)
     amount_of_purchase = models.IntegerField(default=0)
     default_pic_mapping = {'N': 'no_data.jpg', 'MALE': 'male.jpg', 'FEMALE': 'female.jpg'}

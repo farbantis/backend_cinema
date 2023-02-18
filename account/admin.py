@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Cinemagoer, CinemaAdmin
 
-# Register your models here.
+
+admin.site.register(Cinemagoer)
+admin.site.register(CinemaAdmin)
