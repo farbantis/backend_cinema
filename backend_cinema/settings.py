@@ -11,7 +11,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+# , '127.0.0.1', 'localhost', 'mysite.com', '.ngrok.io'
+
+INTERNAL_IPS = [
+     "127.0.0.1",
+ ]
+
 
 AUTH_USER_MODEL = 'account.CinemaUser'
 
@@ -23,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 3rd party apps
+    'corsheaders',
     'rest_framework',
     'djoser',
     # own apps
@@ -31,6 +38,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -114,6 +122,9 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest.framework.permissions.isAuthenticated',
+    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
@@ -123,22 +134,34 @@ DJOSER = {
     'USER': 'account.Cinemagoer',
     'LOGIN FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
-    # 'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
-    # 'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    # 'SEND_CONFIRMATION_EMAIL': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
     'SET_USERNAME_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}', # comma or slash ?
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',  # comma or slash ?
     'ACTIVATION_URL': 'activate/{uid}/{token}',
-    # 'SEND_ACTIVATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
-        # 'user': 'account.serializers.CinemagoerCreateSerializer',
-        # 'user_create': 'account.serializers.CinemagoerCreateSerializer',
-        # 'user_delete': 'djoser.serializers.UserDeleteSerializer',
+        'user': 'account.serializers.CinemaUserCreateSerializer',
+        'user_create': 'account.serializers.CinemaUserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
     },
 }
 
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
 }
+
+CORS_ALLOW_ALL_ORIGINS: True
+CORS_ORIGIN_ALLOW_ALL: True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+
+]
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]
