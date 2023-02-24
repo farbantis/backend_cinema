@@ -1,4 +1,8 @@
 from django.contrib import admin
-from .models import CinemaUser
+from .models import User, CinemaAdmin, CinemaGoer, CinemaGoerAdd
 
-admin.site.register(CinemaUser)
+admin.site.register(User)
+admin.site.register(CinemaGoer)
+admin.site.register(CinemaGoerAdd)
+admin.site.register(CinemaAdmin)
+
