@@ -4,12 +4,6 @@ from django.db import models
 from django.urls import reverse
 
 
-# Movie - Genre - Actor - Character
-# Extended User Model - Cinemagoer
-# Cart - tickets (including purchase using bonuses, bonuses for purchases...etc..)
-# free ticket if birthday, discounts on monday morning, and sunday evening
-
-
 class Genre(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
 

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -8,16 +9,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # , '127.0.0.1', 'localhost', 'mysite.com', '.ngrok.io'
 
 INTERNAL_IPS = [
-     "127.0.0.1",
- ]
-
+    "127.0.0.1",
+]
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -31,12 +30,15 @@ INSTALLED_APPS = [
     # 3rd party apps
     'corsheaders',
     'rest_framework',
+    'debug_toolbar',
     'djoser',
+    'rest_framework_simplejwt',
     # own apps
     'account.apps.AccountConfig',
     'cinema.apps.CinemaConfig',
 ]
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,7 +54,7 @@ ROOT_URLCONF = 'backend_cinema.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],   # base_dir / 'build' -> for react ? check further
+        'DIRS': [BASE_DIR / 'templates'],  # base_dir / 'build' -> for react ? check further
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,7 +68,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend_cinema.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -100,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -149,7 +149,13 @@ DJOSER = {
 }
 
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_TOKEN_CLASSES': (
+           'rest_framework_simplejwt.tokens.AccessToken',
+       )
+
 }
 
 CORS_ALLOW_ALL_ORIGINS: True
@@ -158,8 +164,10 @@ CORS_ORIGIN_ALLOW_ALL: True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
+    'https://042a-2a09-bac1-7560-50-00-84-82.eu.ngrok.io'
 
 ]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
+    'https://042a-2a09-bac1-7560-50-00-84-82.eu.ngrok.io'
 ]

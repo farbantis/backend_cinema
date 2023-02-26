@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('account.urls')),
     path('api/cinema/', include('cinema.api.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 

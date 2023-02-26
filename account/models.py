@@ -5,6 +5,7 @@ from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from account.validators import validate_file_size, upload_path_and_rename
 from .managers import UserManager
+from .tasks import change_status_notification
 
 
 class User(AbstractUser):
@@ -109,7 +110,7 @@ class CinemaGoerAdd(models.Model):
                 action_status = 'going_up'
             else:
                 action_status = 'going_down'
-            # change_status_notification(self.user, self.status, action_status)
+            change_status_notification(self.user, self.status, action_status)
         return self.status
 
 
