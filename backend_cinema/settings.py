@@ -34,9 +34,8 @@ INSTALLED_APPS = [
     'djoser',
     # own apps
     'account.apps.AccountConfig',
-    # 'cinema.apps.CinemaConfig',
+    'cinema.apps.CinemaConfig',
 ]
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -121,47 +120,46 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST_FRAMEWORK = {
-#     # 'DEFAULT_PERMISSION_CLASSES': [
-#     #     'rest.framework.permissions.isAuthenticated',
-#     # ],
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-# }
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
-# DJOSER = {
-#     'USER': 'account.Cinemagoer',
-#     'LOGIN FIELD': 'email',
-#     'USER_CREATE_PASSWORD_RETYPE': True,
-#     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
-#     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-#     'SEND_CONFIRMATION_EMAIL': True,
-#     'SET_USERNAME_RETYPE': True,
-#     'SET_PASSWORD_RETYPE': True,
-#     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-#     'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',  # comma or slash ?
-#     'ACTIVATION_URL': 'activate/{uid}/{token}',
-#     'SEND_ACTIVATION_EMAIL': True,
-#     'SERIALIZERS': {
-#         'user': 'account.serializers.CinemaUserCreateSerializer',
-#         'user_create': 'account.serializers.CinemaUserCreateSerializer',
-#         'user_delete': 'djoser.serializers.UserDeleteSerializer',
-#     },
-# }
-#
-# SIMPLE_JWT = {
-#    'AUTH_HEADER_TYPES': ('JWT',),
-# }
-#
-# CORS_ALLOW_ALL_ORIGINS: True
-# CORS_ORIGIN_ALLOW_ALL: True
-#
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000',
-#     'http://localhost:8000',
-#
-# ]
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000',
-# ]
+DJOSER = {
+    'LOGIN FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,  # now field re_password is required
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,  # send confirmation email if changing username
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    # 'SEND_ACTIVATION_EMAIL': True,  # => raises error, why???
+    'SERIALIZERS': {
+        'user': 'account.serializers.CinemaUserCreateSerializer',
+        'user_create': 'account.serializers.CinemaUserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    },
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+CORS_ALLOW_ALL_ORIGINS: True
+CORS_ORIGIN_ALLOW_ALL: True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+
+]
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+]

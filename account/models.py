@@ -74,8 +74,7 @@ class CinemaGoerAdd(models.Model):
         NO_DATA = 'N', '-'
 
     user = models.OneToOneField(CinemaGoer, on_delete=models.CASCADE, default=12)
-    picture = models.ImageField(upload_to=upload_path_and_rename,
-                                blank=True, null=True,
+    picture = models.ImageField(upload_to=upload_path_and_rename, blank=True, null=True,
                                 validators=[validate_image_file_extension, validate_file_size])
     date_of_birth = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=15, choices=CinemaGoerGender.choices, default=CinemaGoerGender.NO_DATA)
@@ -83,6 +82,9 @@ class CinemaGoerAdd(models.Model):
     bonus = models.IntegerField(default=0)
     amount_of_purchase = models.IntegerField(default=0)
     default_pic_mapping = {'N': 'no_data.jpg', 'MALE': 'male.jpg', 'FEMALE': 'female.jpg'}
+
+    def __str__(self):
+        return self.user.email
 
     @property
     def get_cinemagoer_pic_url(self):
