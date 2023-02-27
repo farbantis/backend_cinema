@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
-from cinema.api.serializers import MoviesSerializer, MovieSerializer
-from cinema.models import Movie
+from cinema.api.serializers import MoviesSerializer, MovieSerializer, ActorSerializer
+from cinema.models import Movie, Actor
 
 
 class MovieSetPagination(PageNumberPagination):
@@ -21,4 +21,16 @@ class MovieAPIView(generics.RetrieveAPIView):
     queryset = Movie.objects.all()
     lookup_url_kwarg = 'movie_id'
     serializer_class = MovieSerializer
+
+
+class ActorsAPIView(generics.ListAPIView):
+    queryset = Actor.objects.all()
+    serializer_class = ActorSerializer
+    pagination_class = MovieSetPagination
+
+
+class ActorAPIView(generics.RetrieveAPIView):
+    queryset = Actor.objects.all()
+    lookup_url_kwarg = 'actor_id'
+    serializer_class = ActorSerializer
 

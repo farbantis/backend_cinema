@@ -164,10 +164,13 @@ CORS_ORIGIN_ALLOW_ALL: True
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
-    'https://042a-2a09-bac1-7560-50-00-84-82.eu.ngrok.io'
+    'http://localhost:80',
+    'http://localhost',
+    'https://localhost:3000',
+    'http://mysite.com:3000',
+    'http://127.0.0.1: 3000',
+    'http://127.0.0.1: 8000',
 
 ]
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'https://042a-2a09-bac1-7560-50-00-84-82.eu.ngrok.io'
-]
+
+
